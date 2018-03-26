@@ -60,6 +60,7 @@ public class JPAUnitTestCase {
 	}
 
 	@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"col1_id", "col2"}))
+//	@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"col1_id_PHYSICAL", "col2"}))
 	@Entity
 	static class Test2 {
 		@Id
@@ -74,12 +75,10 @@ public class JPAUnitTestCase {
 
 	@Before
 	public void init() {
-//		entityManagerFactory = Persistence.createEntityManagerFactory( "templatePU" );
 	}
 
 	@After
 	public void destroy() {
-		entityManagerFactory.close();
 	}
 
 	// Entities are auto-discovered, so just add them anywhere on class-path
@@ -88,15 +87,15 @@ public class JPAUnitTestCase {
 	public void hhh123Test() throws Exception {
 		Properties props = new Properties();
 		props.put(AvailableSettings.HBM2DDL_AUTO, "create");
-		Persistence.generateSchema("templatePU", props);
+		try {
+			Persistence.generateSchema("templatePU", props);
+		} catch (PersistenceException e) {
+			// This is actually expected..
+			e.printStackTrace();
+		}
 
 		props.put(AvailableSettings.PHYSICAL_NAMING_STRATEGY, TestPhysicalNamingStrategy.class.getName());
 		Persistence.generateSchema("templatePU", props);
 
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		// Do stuff...
-		entityManager.getTransaction().commit();
-		entityManager.close();
 	}
 }
