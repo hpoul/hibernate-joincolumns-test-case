@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.Properties;
 
 /**
- * This template demonstrates how to develop a test case for Hibernate ORM, using the Java Persistence API.
+ * https://hibernate.atlassian.net/browse/HHH-12433
  */
 public class JPAUnitTestCase {
 
@@ -84,7 +84,7 @@ public class JPAUnitTestCase {
 	// Entities are auto-discovered, so just add them anywhere on class-path
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh12433Test() throws Exception {
 		Properties props = new Properties();
 		props.put(AvailableSettings.HBM2DDL_AUTO, "create");
 		try {
